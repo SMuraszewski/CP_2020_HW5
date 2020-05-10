@@ -27,6 +27,8 @@ public abstract class Account {
 
     public void deposit(BigDecimal amount) {
         //TODO: add checks for different situations when deposit may not be run successfully
+        balance.compareTo(amount);
+
         this.balance = balance.add(amount);
     }
 
@@ -34,8 +36,12 @@ public abstract class Account {
         charge(BigDecimal.valueOf(amount));
     }
 
-    public void charge(BigDecimal amount) {
+    public void charge(BigDecimal amount) throws InvalidAmountException {
         //TODO: add checks for different situations when charge may not be run successfully
+        if (balance < amount) {
+            throw new InvalidAmountException(
+                    "Not enough money on your account");
+        }
         this.balance = balance.subtract(amount);
     }
 
